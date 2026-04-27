@@ -11,26 +11,25 @@ Below are a few simple guides to add an application for monitoring.
 
 The below guide is for AWS EC2 instance, but it can be adapted
 * Linux OS : `Ubuntu Server 24.04 LTS (HVM), SSD Volume - Architecture 64-bit (x86)`
-* Instance Type = `t3.xlarge` (4vCPU 16 GiB Memory)
+* Instance Type = `r5.xlarge` (4vCPU 32 GiB Memory)
 * You existing or make new PEM file
 * Disk = `60 GB`
 * Ports `80 and 22`
 
 **These other steps will require to be SSH's into the VM, so do that now.**
 
-### Step 2: Install Docker Compose
+### Step 2: Install Docker
 
-Docker is installed by on this image by default, but docker compose it not. So run these commands:
+Docker is not likely installed by this image by default, so run these commands specified in the [Docker installation guide](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
 
-```bash
-# install
-DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
-mkdir -p $DOCKER_CONFIG/cli-plugins
-curl -SL https://github.com/docker/compose/releases/download/v5.1.2/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
-chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+Once you have run the installation commands, verify Docker is running and docker compose is available anytime with:
 
-# verify
-docker compose version
+```
+# verify running
+sudo systemctl status docker
+
+# docker commpose list project, should return empty list
+sudo docker compose ls
 ```
 
 ### Step 3: Install OneAgent
@@ -58,17 +57,23 @@ docker compose version
 git clone https://github.com/Dynatrace/easytrade.git
 ```
 
-2. run Docker Compose
+2. Run Docker Compose
 
 ```
 cd easytrade
-docker compose up -d
+sudo docker compose up -d
 ```
 
 3. Verify all containers up.  
 
+It will take a few minutes to download images and start containers from the previous command, but these commands can be run to check on them
+
 ```
-docker compose up -d
+# overall status of project
+sudo docker compose ls
+
+# list out containers
+sudo docker compose ps
 ```
 
 ### Step 5: Open the Web UI
