@@ -2,10 +2,12 @@
 
 Below are a few simple guides to add an application for monitoring.
 
+* [EasyTrade](https://github.com/Dynatrace/easytrade/tree/main) is demo application of a ficticious stock broking application to allow users to buy and sell some stocks.  The project consisting of many small services that connect to each other for purposes of demoing Dynatrace monitoring. It can be deployed using Helm Charts to K8s or using Docker Compose.
+  
 > **Note**
 > These guides are not officially supported by Dynatrace
 
-## EasyTrade on Docker
+## EasyTrade :: Docker Compose
 
 ### Step 1: Provision VM
 
