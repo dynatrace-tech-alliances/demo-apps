@@ -5,7 +5,7 @@ Below are a few simple guides to add an application for monitoring.
 > **Note**
 > These guides are not officially supported by Dynatrace
 
-## Easytrade on Docker
+## EasyTrade on Docker
 
 ### Step 1: Provision VM
 
@@ -77,12 +77,13 @@ In a browser, just open the UI by going to the public IP for the VM using `http`
 
 ### Step 6: Verify services and traces in Dynatrace
 
-Within Dynatrace, open search and search for: `services` and status and then for a service open the `distributed traces`
+The EasyTrade application has a small, load generator service that sends continuous traffic to the application.  So to see this activity, within Dynatrace open search and search for: `services` and status and then for a service open the `distributed traces`
 
-### Step 7: Enable problems
+### Step 7: Enable problems and more
 
-Within the feature flag page of the demo app (choose the flag icon on the top of the home page), you can adjust problem patterns on and off.  
+Within the feature flag page of the demo app (choose the flag icon on the top of the home page), you can adjust problem patterns on and off.  Problems may take a few minutes to appear, but they will show up in Dynatrace within the Problems app that you can find by searching for `problems` in the search menu.
 
-Problems may take a few minutes to appear, but they will show up in Dynatrace within the Problems app that you can find by searching for `problems` in the search menu.
+Also refer to the [EasyTrade README](https://github.com/Dynatrace/easytrade/tree/main#where-to-start) for more detail on the UI, how to login, and feature flag details.
+
 
 
