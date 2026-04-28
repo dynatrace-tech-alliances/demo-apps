@@ -9,6 +9,10 @@ Below are a few simple guides to add an application for monitoring.
 
 ## EasyTrade :: Docker Compose
 
+**Prereqs**
+* Dynatrace Tenant
+* AWS or Azure account to provision a VM
+
 ### Step 1: Provision VM
 
 The below guide is for AWS EC2 instance, but it can be adapted
