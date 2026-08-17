@@ -1,0 +1,128 @@
+# Ingress and frontend sections follow the structure from the upstream OTel demo Kubernetes deployment guide:
+# https://opentelemetry.io/docs/demo/kubernetes-deployment/
+# AWS ALB annotations added for EKS; placeholder values substituted at deploy time via sed (see ASTROSHOP-EKS.md).
+components:
+  frontend-proxy:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: alb
+        alb.ingress.kubernetes.io/scheme: internet-facing
+        alb.ingress.kubernetes.io/target-type: ip
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+        alb.ingress.kubernetes.io/ssl-redirect: '443'
+        alb.ingress.kubernetes.io/certificate-arn: CERTIFICATE_ARN_PLACEHOLDER
+      hosts:
+        - host: DEMO_DOMAIN_NAME_PLACEHOLDER
+          paths:
+            - path: /
+              pathType: Prefix
+              port: 8080
+  frontend:
+    envOverrides:
+      - name: PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+        value: https://DEMO_DOMAIN_NAME_PLACEHOLDER/otlp-http/v1/traces
+
+# Collector config below is based on Dynatrace OTel collector configuration guidance:
+# https://docs.dynatrace.com/docs/ingest-from/opentelemetry/collector/configuration
+# Exports traces, metrics, and logs to Dynatrace via OTLP/HTTP using credentials
+# from the dynatrace-otelcol-dt-api-credentials secret (created in ASTROSHOP-EKS.md).
+# k8sattributes processor requires the clusterRole RBAC rules defined above it.
+opentelemetry-collector:
+  clusterRole:
+    create: true
+    rules:
+      - apiGroups: [""]
+        resources: ["pods", "namespaces"]
+        verbs: ["get", "watch", "list"]
+      - apiGroups: ["apps"]
+        resources: ["replicasets"]
+        verbs: ["get", "list", "watch"]
+      - apiGroups: ["extensions"]
+        resources: ["replicasets"]
+        verbs: ["get", "list", "watch"]
+  extraEnvs:
+    - name: DT_ENDPOINT
+      valueFrom:
+        secretKeyRef:
+          name: dynatrace-otelcol-dt-api-credentials
+          key: DT_ENDPOINT
+    - name: DT_API_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: dynatrace-otelcol-dt-api-credentials
+          key: DT_API_TOKEN
+    - name: CLUSTER_NAME
+      valueFrom:
+        secretKeyRef:
+          name: dynatrace-otelcol-dt-api-credentials
+          key: CLUSTER_NAME
+  config:
+    exporters:
+      otlphttp/dynatrace:
+        endpoint: "${env:DT_ENDPOINT}"
+        headers:
+          Authorization: "Api-Token ${env:DT_API_TOKEN}"
+    processors:
+      cumulativetodelta: {}
+      # k8sattributes enriches spans/metrics/logs with Kubernetes metadata.
+      # Configuration follows: https://docs.dynatrace.com/docs/ingest-from/opentelemetry/collector/use-cases/kubernetes/k8s-enrich
+      k8sattributes:
+        extract:
+          metadata:
+            - k8s.pod.name
+            - k8s.pod.uid
+            - k8s.deployment.name
+            - k8s.replicaset.name
+            - k8s.statefulset.name
+            - k8s.daemonset.name
+            - k8s.namespace.name
+            - k8s.node.name
+            - k8s.cluster.uid
+            - k8s.container.name
+          annotations:
+            - from: pod
+              key_regex: metadata.dynatrace.com/(.*)
+              tag_name: $$1
+        pod_association:
+          - sources:
+              - from: resource_attribute
+                name: k8s.pod.name
+              - from: resource_attribute
+                name: k8s.namespace.name
+          - sources:
+              - from: resource_attribute
+                name: k8s.pod.ip
+          - sources:
+              - from: resource_attribute
+                name: k8s.pod.uid
+          - sources:
+              - from: connection
+      transform:
+        error_mode: ignore
+        trace_statements:
+          - context: resource
+            statements:
+              - set(attributes["k8s.cluster.name"], "${env:CLUSTER_NAME}") where attributes["k8s.cluster.name"] == nil
+        metric_statements:
+          - context: resource
+            statements:
+              - set(attributes["k8s.cluster.name"], "${env:CLUSTER_NAME}") where attributes["k8s.cluster.name"] == nil
+        log_statements:
+          - context: resource
+            statements:
+              - set(attributes["k8s.cluster.name"], "${env:CLUSTER_NAME}") where attributes["k8s.cluster.name"] == nil
+    service:
+      pipelines:
+        traces/dynatrace:
+          receivers: [otlp]
+          processors: [k8sattributes, transform, batch]
+          exporters: [otlphttp/dynatrace]
+        metrics/dynatrace:
+          receivers: [otlp]
+          processors: [k8sattributes, transform, batch, cumulativetodelta]
+          exporters: [otlphttp/dynatrace]
+        logs/dynatrace:
+          receivers: [otlp]
+          processors: [k8sattributes, transform, batch]
+          exporters: [otlphttp/dynatrace]
