@@ -189,10 +189,10 @@ Connect Dynatrace to the cluster for platform-level observability (nodes, pods, 
 
    ```sh
    helm install dynatrace-operator oci://public.ecr.aws/dynatrace/dynatrace-operator \
-     --create-namespace --namespace dynatrace --wait --cleanup-on-fail
+     --create-namespace --namespace dynatrace --wait
    ```
 
-   Note: `--atomic` is deprecated in Helm 4. Use `--wait --cleanup-on-fail` instead, which is equivalent.
+   Note: `--atomic` is deprecated in Helm 4. Use `--wait` instead.
 
    **b. Pin the ActiveGate image to public ECR in `dynakube.yaml`**
 
