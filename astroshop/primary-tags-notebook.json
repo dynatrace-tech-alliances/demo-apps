@@ -9,7 +9,7 @@
     {
       "type": "markdown",
       "id": "a2b3b9fa-f013-4af1-a46b-512092fc0e8c",
-      "markdown": "# Astroshop primary Grail tags\nReviews the primary tags and fields set for the OpenTelemetry Demo (`otel-demo` namespace):\n* namespace annotations: `primary_tags.app`, `dt.security_context`, `dt.cost.costcenter`, `dt.cost.product`\n* per-workload `metadata.dynatrace.com/*` labels: `primary_tags.business_service`, `primary_tags.business_service_name`, `primary_tags.business_criticality`\n* collector `resource/dynatrace` processor: `primary_tags.monitoring_source` (traces, metrics, and logs sent to Dynatrace)\n\nSource: section 13 of ASTROSHOP-EKS.md.\n"
+      "markdown": "# Astroshop primary Grail tags\nReviews the primary tags and fields set for the OpenTelemetry Demo (`otel-demo` namespace):\n* namespace annotations: `primary_tags.app`, `dt.security_context`, `dt.cost.costcenter`, `dt.cost.product`\n* per-workload `metadata.dynatrace.com/*` labels: `primary_tags.business_service`, `primary_tags.business_service_name`, `primary_tags.business_criticality`\n* collector `resource/dynatrace` processor: `primary_tags.monitoring_source` (traces, metrics, and logs sent to Dynatrace)\n"
     },
     {
       "type": "markdown",
