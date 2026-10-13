@@ -1,0 +1,1180 @@
+{
+  "version": "7",
+  "defaultTimeframe": {
+    "from": "now()-2h",
+    "to": "now()"
+  },
+  "defaultSegments": [],
+  "sections": [
+    {
+      "type": "markdown",
+      "id": "a2b3b9fa-f013-4af1-a46b-512092fc0e8c",
+      "markdown": "# Astroshop primary Grail tags\nReviews the primary tags and fields set for the OpenTelemetry Demo (`otel-demo` namespace):\n* namespace annotations: `primary_tags.app`, `dt.security_context`, `dt.cost.costcenter`, `dt.cost.product`\n* per-workload `metadata.dynatrace.com/*` labels: `primary_tags.business_service`, `primary_tags.business_service_name`, `primary_tags.business_criticality`\n* collector `resource/dynatrace` processor: `primary_tags.monitoring_source` (traces, metrics, and logs sent to Dynatrace)\n\nSource: section 13 of ASTROSHOP-EKS.md.\n"
+    },
+    {
+      "type": "markdown",
+      "id": "bb9a34b4-c206-4dbb-8881-72bb5f9db71d",
+      "markdown": "## Spans\n"
+    },
+    {
+      "type": "dql",
+      "id": "c01e04f3-4a2c-4256-bc2d-b52b9c20e59a",
+      "title": "Primary tags per service",
+      "showInput": true,
+      "drilldownPath": [],
+      "state": {
+        "input": {
+          "timeframe": {
+            "from": "now()-2h",
+            "to": "now()"
+          },
+          "value": "fetch spans, from: -30m\n| filter k8s.namespace.name == \"otel-demo\"\n| summarize spans = count(), by: {\n    service.name,\n    primary_tags.app,\n    primary_tags.business_service,\n    primary_tags.business_service_name,\n    primary_tags.business_criticality,\n    primary_tags.monitoring_source,\n    dt.security_context,\n    dt.cost.costcenter,\n    dt.cost.product\n  }\n| sort service.name asc\n"
+        },
+        "visualizationSettings": {
+          "autoSelectVisualization": true,
+          "chartSettings": {}
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "includeLogs": true,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "visualization": "table",
+        "result": {
+          "code": 200,
+          "value": {
+            "records": [
+              {
+                "service.name": "accounting",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001001",
+                "primary_tags.business_service_name": "Accounting",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "160"
+              },
+              {
+                "service.name": "accounting",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001001",
+                "primary_tags.business_service_name": "Accounting",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "91"
+              },
+              {
+                "service.name": "ad",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001002",
+                "primary_tags.business_service_name": "Ad",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "729"
+              },
+              {
+                "service.name": "ad",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001002",
+                "primary_tags.business_service_name": "Ad",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "469"
+              },
+              {
+                "service.name": "cart",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001004",
+                "primary_tags.business_service_name": "Cart",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "1160"
+              },
+              {
+                "service.name": "cart",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001004",
+                "primary_tags.business_service_name": "Cart",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "704"
+              },
+              {
+                "service.name": "checkout",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001006",
+                "primary_tags.business_service_name": "Checkout",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "722"
+              },
+              {
+                "service.name": "checkout",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001006",
+                "primary_tags.business_service_name": "Checkout",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "418"
+              },
+              {
+                "service.name": "currency",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001007",
+                "primary_tags.business_service_name": "Currency",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "451"
+              },
+              {
+                "service.name": "currency",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001007",
+                "primary_tags.business_service_name": "Currency",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "309"
+              },
+              {
+                "service.name": "email",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001008",
+                "primary_tags.business_service_name": "Email",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "208"
+              },
+              {
+                "service.name": "email",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001008",
+                "primary_tags.business_service_name": "Email",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "120"
+              },
+              {
+                "service.name": "flagd",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001020",
+                "primary_tags.business_service_name": "Flagd",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "10690"
+              },
+              {
+                "service.name": "flagd",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001020",
+                "primary_tags.business_service_name": "Flagd",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "6748"
+              },
+              {
+                "service.name": "fraud-detection",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001009",
+                "primary_tags.business_service_name": "Fraud Detection",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "334"
+              },
+              {
+                "service.name": "fraud-detection",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001009",
+                "primary_tags.business_service_name": "Fraud Detection",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "62"
+              },
+              {
+                "service.name": "frontend",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001010",
+                "primary_tags.business_service_name": "Frontend",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "15564"
+              },
+              {
+                "service.name": "frontend",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001010",
+                "primary_tags.business_service_name": "Frontend",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "9950"
+              },
+              {
+                "service.name": "frontend-proxy",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001011",
+                "primary_tags.business_service_name": "Frontend Proxy",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "15633"
+              },
+              {
+                "service.name": "frontend-proxy",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001011",
+                "primary_tags.business_service_name": "Frontend Proxy",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "10062"
+              },
+              {
+                "service.name": "frontend-web",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001013",
+                "primary_tags.business_service_name": "Load Generator",
+                "primary_tags.business_criticality": "L3",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "8403"
+              },
+              {
+                "service.name": "frontend-web",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001013",
+                "primary_tags.business_service_name": "Load Generator",
+                "primary_tags.business_criticality": "L3",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "3637"
+              },
+              {
+                "service.name": "image-provider",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001012",
+                "primary_tags.business_service_name": "Image Provider",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "1735"
+              },
+              {
+                "service.name": "image-provider",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001012",
+                "primary_tags.business_service_name": "Image Provider",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "1104"
+              },
+              {
+                "service.name": "load-generator",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001013",
+                "primary_tags.business_service_name": "Load Generator",
+                "primary_tags.business_criticality": "L3",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "4704"
+              },
+              {
+                "service.name": "load-generator",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001013",
+                "primary_tags.business_service_name": "Load Generator",
+                "primary_tags.business_criticality": "L3",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "1306"
+              },
+              {
+                "service.name": "payment",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001015",
+                "primary_tags.business_service_name": "Payment",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "108"
+              },
+              {
+                "service.name": "payment",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001015",
+                "primary_tags.business_service_name": "Payment",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "61"
+              },
+              {
+                "service.name": "product-catalog",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001016",
+                "primary_tags.business_service_name": "Product Catalog",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "9302"
+              },
+              {
+                "service.name": "product-catalog",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001016",
+                "primary_tags.business_service_name": "Product Catalog",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "3810"
+              },
+              {
+                "service.name": "quote",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001017",
+                "primary_tags.business_service_name": "Quote",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "834"
+              },
+              {
+                "service.name": "quote",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001017",
+                "primary_tags.business_service_name": "Quote",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "198"
+              },
+              {
+                "service.name": "recommendation",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001018",
+                "primary_tags.business_service_name": "Recommendation",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "3189"
+              },
+              {
+                "service.name": "recommendation",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001018",
+                "primary_tags.business_service_name": "Recommendation",
+                "primary_tags.business_criticality": "L2",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "813"
+              },
+              {
+                "service.name": "shipping",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001019",
+                "primary_tags.business_service_name": "Shipping",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": "otel-collector",
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "266"
+              },
+              {
+                "service.name": "shipping",
+                "primary_tags.app": "Open Telemetry Demo",
+                "primary_tags.business_service": "BSN1001019",
+                "primary_tags.business_service_name": "Shipping",
+                "primary_tags.business_criticality": "L1",
+                "primary_tags.monitoring_source": null,
+                "dt.security_context": "public_facing",
+                "dt.cost.costcenter": "it_services",
+                "dt.cost.product": "astroshop",
+                "spans": "162"
+              }
+            ],
+            "types": [
+              {
+                "indexRange": [
+                  0,
+                  35
+                ],
+                "mappings": {
+                  "service.name": {
+                    "type": "string"
+                  },
+                  "primary_tags.app": {
+                    "type": "string"
+                  },
+                  "primary_tags.business_service": {
+                    "type": "string"
+                  },
+                  "primary_tags.business_service_name": {
+                    "type": "string"
+                  },
+                  "primary_tags.business_criticality": {
+                    "type": "string"
+                  },
+                  "primary_tags.monitoring_source": {
+                    "type": "string"
+                  },
+                  "dt.security_context": {
+                    "type": "string"
+                  },
+                  "dt.cost.costcenter": {
+                    "type": "string"
+                  },
+                  "dt.cost.product": {
+                    "type": "string"
+                  },
+                  "spans": {
+                    "type": "long"
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "grail": {
+                "analysisTimeframe": {
+                  "end": "2026-10-13T12:00:10.432269999Z",
+                  "start": "2026-10-13T11:30:10.432269999Z"
+                },
+                "canonicalQuery": "fetch spans, from:-30m\n| filter k8s.namespace.name == \"otel-demo\"\n| summarize by:{service.name, primary_tags.app, primary_tags.business_service, primary_tags.business_service_name, primary_tags.business_criticality, primary_tags.monitoring_source, dt.security_context, dt.cost.costcenter, dt.cost.product}, spans = count()\n| sort service.name",
+                "contributions": {
+                  "buckets": [
+                    {
+                      "matchedRecordsRatio": 1,
+                      "name": "default_spans",
+                      "scannedBytes": 265462264,
+                      "table": "spans"
+                    }
+                  ]
+                },
+                "dqlVersion": "V1_0",
+                "executionTimeMilliseconds": 109,
+                "locale": "en-US",
+                "notifications": [],
+                "query": "fetch spans, from: -30m\n| filter k8s.namespace.name == \"otel-demo\"\n| summarize spans = count(), by: {\n    service.name,\n    primary_tags.app,\n    primary_tags.business_service,\n    primary_tags.business_service_name,\n    primary_tags.business_criticality,\n    primary_tags.monitoring_source,\n    dt.security_context,\n    dt.cost.costcenter,\n    dt.cost.product\n  }\n| sort service.name asc\n",
+                "queryId": "01a13522-6aaf-745b-8e0a-1cb4a8a19763",
+                "sampled": false,
+                "scannedBytes": 265462264,
+                "scannedDataPoints": 0,
+                "scannedRecords": 581749,
+                "timezone": "America/New_York"
+              }
+            }
+          },
+          "notifications": [],
+          "querySettings": {
+            "maxResultMegaBytes": 1,
+            "maxResultRecords": 1000,
+            "defaultScanLimitGbytes": 500,
+            "enableSampling": false,
+            "defaultSamplingRatio": 10
+          },
+          "dateTime": "2026-10-13T12:00:11.308Z",
+          "input": {
+            "value": "fetch spans, from: -30m\n| filter k8s.namespace.name == \"otel-demo\"\n| summarize spans = count(), by: {\n    service.name,\n    primary_tags.app,\n    primary_tags.business_service,\n    primary_tags.business_service_name,\n    primary_tags.business_criticality,\n    primary_tags.monitoring_source,\n    dt.security_context,\n    dt.cost.costcenter,\n    dt.cost.product\n  }\n| sort service.name asc\n",
+            "timeframe": {
+              "from": "now()-2h",
+              "to": "now()"
+            },
+            "filterSegments": []
+          }
+        },
+        "state": "success"
+      }
+    },
+    {
+      "type": "dql",
+      "id": "d5599534-3fe7-4098-a4ba-6390181c39c3",
+      "title": "Spans missing business service or monitoring source tag (expect no rows)",
+      "showInput": true,
+      "drilldownPath": [],
+      "state": {
+        "input": {
+          "timeframe": {
+            "from": "now()-2h",
+            "to": "now()"
+          },
+          "value": "fetch spans, from: -30m\n| filter k8s.namespace.name == \"otel-demo\"\n| filter isNull(primary_tags.business_service) or isNull(primary_tags.monitoring_source)\n| summarize spans = count(), by: {service.name, k8s.deployment.name}\n"
+        },
+        "visualizationSettings": {
+          "autoSelectVisualization": true,
+          "chartSettings": {}
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "includeLogs": true,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "visualization": "table",
+        "result": {
+          "code": 200,
+          "value": {
+            "records": [
+              {
+                "service.name": "accounting",
+                "k8s.deployment.name": "accounting",
+                "spans": "91"
+              },
+              {
+                "service.name": "ad",
+                "k8s.deployment.name": "ad",
+                "spans": "469"
+              },
+              {
+                "service.name": "cart",
+                "k8s.deployment.name": "cart",
+                "spans": "704"
+              },
+              {
+                "service.name": "checkout",
+                "k8s.deployment.name": "checkout",
+                "spans": "418"
+              },
+              {
+                "service.name": "currency",
+                "k8s.deployment.name": "currency",
+                "spans": "309"
+              },
+              {
+                "service.name": "email",
+                "k8s.deployment.name": "email",
+                "spans": "120"
+              },
+              {
+                "service.name": "flagd",
+                "k8s.deployment.name": "flagd",
+                "spans": "6748"
+              },
+              {
+                "service.name": "fraud-detection",
+                "k8s.deployment.name": "fraud-detection",
+                "spans": "62"
+              },
+              {
+                "service.name": "frontend",
+                "k8s.deployment.name": "frontend",
+                "spans": "9950"
+              },
+              {
+                "service.name": "frontend-proxy",
+                "k8s.deployment.name": "frontend-proxy",
+                "spans": "10062"
+              },
+              {
+                "service.name": "frontend-web",
+                "k8s.deployment.name": "load-generator",
+                "spans": "3637"
+              },
+              {
+                "service.name": "image-provider",
+                "k8s.deployment.name": "image-provider",
+                "spans": "1104"
+              },
+              {
+                "service.name": "load-generator",
+                "k8s.deployment.name": "load-generator",
+                "spans": "1306"
+              },
+              {
+                "service.name": "payment",
+                "k8s.deployment.name": "payment",
+                "spans": "61"
+              },
+              {
+                "service.name": "product-catalog",
+                "k8s.deployment.name": "product-catalog",
+                "spans": "3810"
+              },
+              {
+                "service.name": "quote",
+                "k8s.deployment.name": "quote",
+                "spans": "198"
+              },
+              {
+                "service.name": "recommendation",
+                "k8s.deployment.name": "recommendation",
+                "spans": "813"
+              },
+              {
+                "service.name": "shipping",
+                "k8s.deployment.name": "shipping",
+                "spans": "162"
+              }
+            ],
+            "types": [
+              {
+                "indexRange": [
+                  0,
+                  17
+                ],
+                "mappings": {
+                  "service.name": {
+                    "type": "string"
+                  },
+                  "k8s.deployment.name": {
+                    "type": "string"
+                  },
+                  "spans": {
+                    "type": "long"
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "grail": {
+                "analysisTimeframe": {
+                  "end": "2026-10-13T12:00:10.439205773Z",
+                  "start": "2026-10-13T11:30:10.439205773Z"
+                },
+                "canonicalQuery": "fetch spans, from:-30m\n| filter k8s.namespace.name == \"otel-demo\"\n| filter isNull(primary_tags.business_service) OR isNull(primary_tags.monitoring_source)\n| summarize by:{service.name, k8s.deployment.name}, spans = count()",
+                "contributions": {
+                  "buckets": [
+                    {
+                      "matchedRecordsRatio": 1,
+                      "name": "default_spans",
+                      "scannedBytes": 265462264,
+                      "table": "spans"
+                    }
+                  ]
+                },
+                "dqlVersion": "V1_0",
+                "executionTimeMilliseconds": 79,
+                "locale": "en-US",
+                "notifications": [],
+                "query": "fetch spans, from: -30m\n| filter k8s.namespace.name == \"otel-demo\"\n| filter isNull(primary_tags.business_service) or isNull(primary_tags.monitoring_source)\n| summarize spans = count(), by: {service.name, k8s.deployment.name}\n",
+                "queryId": "01a13522-6ab9-7c3c-8e29-56dceda36658",
+                "sampled": false,
+                "scannedBytes": 265462264,
+                "scannedDataPoints": 0,
+                "scannedRecords": 581749,
+                "timezone": "America/New_York"
+              }
+            }
+          },
+          "notifications": [],
+          "querySettings": {
+            "maxResultMegaBytes": 1,
+            "maxResultRecords": 1000,
+            "defaultScanLimitGbytes": 500,
+            "enableSampling": false,
+            "defaultSamplingRatio": 10
+          },
+          "dateTime": "2026-10-13T12:00:11.460Z",
+          "input": {
+            "value": "fetch spans, from: -30m\n| filter k8s.namespace.name == \"otel-demo\"\n| filter isNull(primary_tags.business_service) or isNull(primary_tags.monitoring_source)\n| summarize spans = count(), by: {service.name, k8s.deployment.name}\n",
+            "timeframe": {
+              "from": "now()-2h",
+              "to": "now()"
+            },
+            "filterSegments": []
+          }
+        },
+        "state": "success"
+      }
+    },
+    {
+      "type": "dql",
+      "id": "f4df5168-4aa3-48a9-9479-4cf104c55fed",
+      "title": "L1 business-critical spans",
+      "showInput": true,
+      "drilldownPath": [],
+      "state": {
+        "input": {
+          "timeframe": {
+            "from": "now()-2h",
+            "to": "now()"
+          },
+          "value": "fetch spans, from: -30m\n| filter primary_tags.business_criticality == \"L1\"\n| summarize spans = count(), by: {primary_tags.business_service_name}\n| sort spans desc\n"
+        },
+        "visualizationSettings": {
+          "autoSelectVisualization": true,
+          "chartSettings": {}
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "includeLogs": true,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "visualization": "table",
+        "result": {
+          "code": 200,
+          "value": {
+            "records": [
+              {
+                "primary_tags.business_service_name": "Frontend Proxy",
+                "spans": "25695"
+              },
+              {
+                "primary_tags.business_service_name": "Frontend",
+                "spans": "25514"
+              },
+              {
+                "primary_tags.business_service_name": "Product Catalog",
+                "spans": "13112"
+              },
+              {
+                "primary_tags.business_service_name": "Cart",
+                "spans": "1864"
+              },
+              {
+                "primary_tags.business_service_name": "Ad",
+                "spans": "1198"
+              },
+              {
+                "primary_tags.business_service_name": "Checkout",
+                "spans": "1140"
+              },
+              {
+                "primary_tags.business_service_name": "Currency",
+                "spans": "760"
+              },
+              {
+                "primary_tags.business_service_name": "Shipping",
+                "spans": "428"
+              },
+              {
+                "primary_tags.business_service_name": "Payment",
+                "spans": "169"
+              }
+            ],
+            "types": [
+              {
+                "indexRange": [
+                  0,
+                  8
+                ],
+                "mappings": {
+                  "primary_tags.business_service_name": {
+                    "type": "string"
+                  },
+                  "spans": {
+                    "type": "long"
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "grail": {
+                "analysisTimeframe": {
+                  "end": "2026-10-13T12:00:10.444257184Z",
+                  "start": "2026-10-13T11:30:10.444257184Z"
+                },
+                "canonicalQuery": "fetch spans, from:-30m\n| filter primary_tags.business_criticality == \"L1\"\n| summarize by:{primary_tags.business_service_name}, spans = count()\n| sort spans desc",
+                "contributions": {
+                  "buckets": [
+                    {
+                      "matchedRecordsRatio": 1,
+                      "name": "default_spans",
+                      "scannedBytes": 196833097,
+                      "table": "spans"
+                    }
+                  ]
+                },
+                "dqlVersion": "V1_0",
+                "executionTimeMilliseconds": 53,
+                "locale": "en-US",
+                "notifications": [],
+                "query": "fetch spans, from: -30m\n| filter primary_tags.business_criticality == \"L1\"\n| summarize spans = count(), by: {primary_tags.business_service_name}\n| sort spans desc\n",
+                "queryId": "01a13522-6ab8-7ba1-970d-fac644e24b05",
+                "sampled": false,
+                "scannedBytes": 196833097,
+                "scannedDataPoints": 0,
+                "scannedRecords": 581749,
+                "timezone": "America/New_York"
+              }
+            }
+          },
+          "notifications": [],
+          "querySettings": {
+            "maxResultMegaBytes": 1,
+            "maxResultRecords": 1000,
+            "defaultScanLimitGbytes": 500,
+            "enableSampling": false,
+            "defaultSamplingRatio": 10
+          },
+          "dateTime": "2026-10-13T12:00:11.633Z",
+          "input": {
+            "value": "fetch spans, from: -30m\n| filter primary_tags.business_criticality == \"L1\"\n| summarize spans = count(), by: {primary_tags.business_service_name}\n| sort spans desc\n",
+            "timeframe": {
+              "from": "now()-2h",
+              "to": "now()"
+            },
+            "filterSegments": []
+          }
+        },
+        "state": "success"
+      }
+    },
+    {
+      "type": "markdown",
+      "id": "ad3c96fc-7116-4c30-bcd1-bdb4057b1456",
+      "markdown": "## Logs\n"
+    },
+    {
+      "type": "dql",
+      "id": "4efc87d2-1913-4835-bb5d-7d89c517f751",
+      "title": "Monitoring source on logs per service",
+      "showInput": true,
+      "drilldownPath": [],
+      "state": {
+        "input": {
+          "timeframe": {
+            "from": "now()-2h",
+            "to": "now()"
+          },
+          "value": "fetch logs, from: -30m\n| filter k8s.namespace.name == \"otel-demo\"\n| summarize logs = count(), by: {service.name, primary_tags.monitoring_source}\n| sort service.name asc\n"
+        },
+        "visualizationSettings": {
+          "autoSelectVisualization": true,
+          "chartSettings": {}
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "includeLogs": true,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "visualization": "table",
+        "state": "success"
+      }
+    },
+    {
+      "type": "markdown",
+      "id": "656227bc-4e19-4524-a03a-77a7920c3985",
+      "markdown": "## Service metrics\n"
+    },
+    {
+      "type": "dql",
+      "id": "e209515e-7d3c-4c5c-94ec-5db5c578476e",
+      "title": "Primary tags on service metrics",
+      "showInput": true,
+      "drilldownPath": [],
+      "state": {
+        "input": {
+          "timeframe": {
+            "from": "now()-2h",
+            "to": "now()"
+          },
+          "value": "timeseries requests = sum(dt.service.request.count), from: -30m,\n  by: {\n    service.name,\n    primary_tags.app,\n    primary_tags.business_service,\n    primary_tags.business_service_name,\n    primary_tags.business_criticality,\n    primary_tags.monitoring_source,\n    dt.security_context,\n    dt.cost.costcenter,\n    dt.cost.product\n  },\n  filter: k8s.namespace.name == \"otel-demo\"\n| fieldsRemove requests, timeframe, interval\n| sort service.name asc\n"
+        },
+        "visualizationSettings": {
+          "autoSelectVisualization": true,
+          "chartSettings": {}
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "includeLogs": true,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "visualization": "table",
+        "state": "success"
+      }
+    },
+    {
+      "type": "markdown",
+      "id": "30cae812-942e-4f5d-8c03-849607adb445",
+      "markdown": "## Problems\nDavis problems carry the primary tags of their affected entities as arrays, so the filters use `in()` and the summaries use `expand`.\n"
+    },
+    {
+      "type": "dql",
+      "id": "6c0f5203-c5d4-40d4-b350-959447755ac3",
+      "title": "Astroshop problems with their primary tags",
+      "showInput": true,
+      "drilldownPath": [],
+      "state": {
+        "input": {
+          "timeframe": {
+            "from": "now()-2h",
+            "to": "now()"
+          },
+          "value": "fetch dt.davis.problems, from: -7d\n| filter not(dt.davis.is_duplicate)\n| filter in(\"Open Telemetry Demo\", primary_tags.app)\n| fields event.start, display_id, event.name, event.category, event.status,\n    primary_tags.business_service_name,\n    primary_tags.business_criticality,\n    root_cause_entity_name\n| sort event.start desc\n"
+        },
+        "visualizationSettings": {
+          "autoSelectVisualization": true,
+          "chartSettings": {}
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "includeLogs": true,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "visualization": "table",
+        "state": "success"
+      }
+    },
+    {
+      "type": "dql",
+      "id": "c16b8ac6-abfa-4eff-8906-b0b93fdabc56",
+      "title": "Problems by business criticality",
+      "showInput": true,
+      "drilldownPath": [],
+      "state": {
+        "input": {
+          "timeframe": {
+            "from": "now()-2h",
+            "to": "now()"
+          },
+          "value": "fetch dt.davis.problems, from: -7d\n| filter not(dt.davis.is_duplicate)\n| filter in(\"Open Telemetry Demo\", primary_tags.app)\n| expand primary_tags.business_criticality\n| summarize problems = count(),\n    active = countIf(event.status == \"ACTIVE\"),\n    by: {primary_tags.business_criticality}\n| sort primary_tags.business_criticality asc\n"
+        },
+        "visualizationSettings": {
+          "autoSelectVisualization": true,
+          "chartSettings": {}
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "includeLogs": true,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "visualization": "table",
+        "state": "success"
+      }
+    },
+    {
+      "type": "dql",
+      "id": "a6569b24-40e6-4102-8dac-893a576d1130",
+      "title": "Problems by business service",
+      "showInput": true,
+      "drilldownPath": [],
+      "state": {
+        "input": {
+          "timeframe": {
+            "from": "now()-2h",
+            "to": "now()"
+          },
+          "value": "fetch dt.davis.problems, from: -7d\n| filter not(dt.davis.is_duplicate)\n| filter in(\"Open Telemetry Demo\", primary_tags.app)\n| filter isNotNull(primary_tags.business_service)\n| expand primary_tags.business_service\n| expand primary_tags.business_service_name\n| summarize problems = count(),\n    active = countIf(event.status == \"ACTIVE\"),\n    last_problem = max(event.start),\n    by: {primary_tags.business_service, primary_tags.business_service_name}\n| sort problems desc\n"
+        },
+        "visualizationSettings": {
+          "autoSelectVisualization": true,
+          "chartSettings": {}
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "includeLogs": true,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "visualization": "table",
+        "state": "success"
+      }
+    },
+    {
+      "type": "dql",
+      "id": "7eee876b-34fb-49b9-8d95-fd7fe74e0307",
+      "title": "Active L1 business-critical problems (all apps)",
+      "showInput": true,
+      "drilldownPath": [],
+      "state": {
+        "input": {
+          "timeframe": {
+            "from": "now()-2h",
+            "to": "now()"
+          },
+          "value": "fetch dt.davis.problems, from: -7d\n| filter not(dt.davis.is_duplicate)\n| filter event.status == \"ACTIVE\"\n| filter in(\"L1\", primary_tags.business_criticality)\n| fields event.start, display_id, event.name, event.category,\n    primary_tags.app,\n    primary_tags.business_service_name,\n    root_cause_entity_name\n| sort event.start desc\n"
+        },
+        "visualizationSettings": {
+          "autoSelectVisualization": true,
+          "chartSettings": {}
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "includeLogs": true,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "visualization": "table",
+        "state": "success"
+      }
+    },
+    {
+      "type": "dql",
+      "id": "30a8c507-acb4-4bcd-a2ed-0b23817aae4e",
+      "title": "Astroshop problems without a business service (Kubernetes events get only namespace tags)",
+      "showInput": true,
+      "drilldownPath": [],
+      "state": {
+        "input": {
+          "timeframe": {
+            "from": "now()-2h",
+            "to": "now()"
+          },
+          "value": "fetch dt.davis.problems, from: -7d\n| filter not(dt.davis.is_duplicate)\n| filter in(\"Open Telemetry Demo\", primary_tags.app)\n| filter isNull(primary_tags.business_service)\n| fields event.start, display_id, event.name, event.category, event.status,\n    root_cause_entity_name, k8s.namespace.name\n| sort event.start desc\n"
+        },
+        "visualizationSettings": {
+          "autoSelectVisualization": true,
+          "chartSettings": {}
+        },
+        "querySettings": {
+          "maxResultRecords": 1000,
+          "defaultScanLimitGbytes": 500,
+          "maxResultMegaBytes": 1,
+          "defaultSamplingRatio": 10,
+          "enableSampling": false
+        },
+        "davis": {
+          "includeLogs": true,
+          "davisVisualization": {
+            "isAvailable": true
+          }
+        },
+        "visualization": "table",
+        "state": "success"
+      }
+    }
+  ]
+}

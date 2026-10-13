@@ -1,8 +1,79 @@
 # Ingress and frontend sections follow the structure from the upstream OTel demo Kubernetes deployment guide:
 # https://opentelemetry.io/docs/demo/kubernetes-deployment/
 # AWS ALB annotations added for EKS; placeholder values substituted at deploy time via sed (see ASTROSHOP-EKS.md).
+# metadata.dynatrace.com/* pod annotations set Dynatrace primary tags per component; they are
+# extracted by the collector's k8sattributes processor below.
 components:
+  accounting:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001001
+      metadata.dynatrace.com/primary_tags.business_service_name: Accounting
+      metadata.dynatrace.com/primary_tags.business_criticality: L2
+  ad:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001002
+      metadata.dynatrace.com/primary_tags.business_service_name: Ad
+      metadata.dynatrace.com/primary_tags.business_criticality: L1
+  agent:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001003
+      metadata.dynatrace.com/primary_tags.business_service_name: Agent
+      metadata.dynatrace.com/primary_tags.business_criticality: L3
+  cart:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001004
+      metadata.dynatrace.com/primary_tags.business_service_name: Cart
+      metadata.dynatrace.com/primary_tags.business_criticality: L1
+  chatbot:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001005
+      metadata.dynatrace.com/primary_tags.business_service_name: Chatbot
+      metadata.dynatrace.com/primary_tags.business_criticality: L3
+  checkout:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001006
+      metadata.dynatrace.com/primary_tags.business_service_name: Checkout
+      metadata.dynatrace.com/primary_tags.business_criticality: L1
+  currency:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001007
+      metadata.dynatrace.com/primary_tags.business_service_name: Currency
+      metadata.dynatrace.com/primary_tags.business_criticality: L1
+  email:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001008
+      metadata.dynatrace.com/primary_tags.business_service_name: Email
+      metadata.dynatrace.com/primary_tags.business_criticality: L2
+  fraud-detection:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001009
+      metadata.dynatrace.com/primary_tags.business_service_name: Fraud Detection
+      metadata.dynatrace.com/primary_tags.business_criticality: L2
+  frontend:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001010
+      metadata.dynatrace.com/primary_tags.business_service_name: Frontend
+      metadata.dynatrace.com/primary_tags.business_criticality: L1
+    envOverrides:
+      - name: PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+        value: https://DEMO_DOMAIN_NAME_PLACEHOLDER/otlp-http/v1/traces
+
   frontend-proxy:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001011
+      metadata.dynatrace.com/primary_tags.business_service_name: Frontend Proxy
+      metadata.dynatrace.com/primary_tags.business_criticality: L1
     ingress:
       enabled: true
       annotations:
@@ -18,10 +89,90 @@ components:
             - path: /
               pathType: Prefix
               port: 8080
-  frontend:
-    envOverrides:
-      - name: PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
-        value: https://DEMO_DOMAIN_NAME_PLACEHOLDER/otlp-http/v1/traces
+  image-provider:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001012
+      metadata.dynatrace.com/primary_tags.business_service_name: Image Provider
+      metadata.dynatrace.com/primary_tags.business_criticality: L2
+  load-generator:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001013
+      metadata.dynatrace.com/primary_tags.business_service_name: Load Generator
+      metadata.dynatrace.com/primary_tags.business_criticality: L3
+  mcp:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001014
+      metadata.dynatrace.com/primary_tags.business_service_name: MCP
+      metadata.dynatrace.com/primary_tags.business_criticality: L3
+  payment:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001015
+      metadata.dynatrace.com/primary_tags.business_service_name: Payment
+      metadata.dynatrace.com/primary_tags.business_criticality: L1
+  product-catalog:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001016
+      metadata.dynatrace.com/primary_tags.business_service_name: Product Catalog
+      metadata.dynatrace.com/primary_tags.business_criticality: L1
+  quote:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001017
+      metadata.dynatrace.com/primary_tags.business_service_name: Quote
+      metadata.dynatrace.com/primary_tags.business_criticality: L2
+  recommendation:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001018
+      metadata.dynatrace.com/primary_tags.business_service_name: Recommendation
+      metadata.dynatrace.com/primary_tags.business_criticality: L2
+  shipping:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001019
+      metadata.dynatrace.com/primary_tags.business_service_name: Shipping
+      metadata.dynatrace.com/primary_tags.business_criticality: L1
+  flagd:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001020
+      metadata.dynatrace.com/primary_tags.business_service_name: Flagd
+      metadata.dynatrace.com/primary_tags.business_criticality: L2
+  kafka:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001021
+      metadata.dynatrace.com/primary_tags.business_service_name: Kafka
+      metadata.dynatrace.com/primary_tags.business_criticality: L2
+  astronomy-db:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001022
+      metadata.dynatrace.com/primary_tags.business_service_name: Astronomy DB
+      metadata.dynatrace.com/primary_tags.business_criticality: L1
+  valkey-cart:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001023
+      metadata.dynatrace.com/primary_tags.business_service_name: Valkey Cart
+      metadata.dynatrace.com/primary_tags.business_criticality: L1
+  telemetry-docs:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001024
+      metadata.dynatrace.com/primary_tags.business_service_name: Telemetry Docs
+      metadata.dynatrace.com/primary_tags.business_criticality: L3
+  opamp-server:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001025
+      metadata.dynatrace.com/primary_tags.business_service_name: OpAMP Server
+      metadata.dynatrace.com/primary_tags.business_criticality: L3
 
 # Collector config below is based on Dynatrace OTel collector configuration guidance:
 # https://docs.dynatrace.com/docs/ingest-from/opentelemetry/collector/configuration
@@ -29,6 +180,11 @@ components:
 # from the dynatrace-otelcol-dt-api-credentials secret (created in ASTROSHOP-EKS.md).
 # k8sattributes processor requires the clusterRole RBAC rules defined above it.
 opentelemetry-collector:
+  podAnnotations:
+    # Primary tags:
+    metadata.dynatrace.com/primary_tags.business_service: BSN1001026
+    metadata.dynatrace.com/primary_tags.business_service_name: OTel Collector
+    metadata.dynatrace.com/primary_tags.business_criticality: L2
   clusterRole:
     create: true
     rules:
@@ -65,6 +221,11 @@ opentelemetry-collector:
           Authorization: "Api-Token ${env:DT_API_TOKEN}"
     processors:
       cumulativetodelta: {}
+      resource/dynatrace:
+        attributes:
+          - key: primary_tags.monitoring_source
+            value: "otel-collector"
+            action: upsert
       # k8sattributes enriches spans/metrics/logs with Kubernetes metadata.
       # Configuration follows: https://docs.dynatrace.com/docs/ingest-from/opentelemetry/collector/use-cases/kubernetes/k8s-enrich
       k8sattributes:
@@ -82,6 +243,16 @@ opentelemetry-collector:
             - k8s.container.name
           annotations:
             - from: pod
+              key_regex: metadata.dynatrace.com/(.*)
+              tag_name: $$1
+            - from: namespace
+              key_regex: metadata.dynatrace.com/(.*)
+              tag_name: $$1
+          labels:
+            - from: pod
+              key_regex: metadata.dynatrace.com/(.*)
+              tag_name: $$1
+            - from: namespace
               key_regex: metadata.dynatrace.com/(.*)
               tag_name: $$1
         pod_association:
@@ -116,13 +287,45 @@ opentelemetry-collector:
       pipelines:
         traces/dynatrace:
           receivers: [otlp]
-          processors: [k8sattributes, transform, batch]
+          processors: [k8sattributes, transform, resource/dynatrace, batch]
           exporters: [otlphttp/dynatrace]
         metrics/dynatrace:
           receivers: [otlp]
-          processors: [k8sattributes, transform, batch, cumulativetodelta]
+          processors: [k8sattributes, transform, resource/dynatrace, batch, cumulativetodelta]
           exporters: [otlphttp/dynatrace]
         logs/dynatrace:
           receivers: [otlp]
-          processors: [k8sattributes, transform, batch]
+          processors: [k8sattributes, transform, resource/dynatrace, batch]
           exporters: [otlphttp/dynatrace]
+
+# Jaeger's pod template does not support custom podAnnotations, so pod labels are used
+# instead (k8sattributes above also extracts metadata.dynatrace.com/* labels).
+jaeger:
+  jaeger:
+    podLabels:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001027
+      metadata.dynatrace.com/primary_tags.business_service_name: Jaeger
+      metadata.dynatrace.com/primary_tags.business_criticality: L3
+
+prometheus:
+  server:
+    podAnnotations:
+      # Primary tags:
+      metadata.dynatrace.com/primary_tags.business_service: BSN1001028
+      metadata.dynatrace.com/primary_tags.business_service_name: Prometheus
+      metadata.dynatrace.com/primary_tags.business_criticality: L3
+
+grafana:
+  podAnnotations:
+    # Primary tags:
+    metadata.dynatrace.com/primary_tags.business_service: BSN1001029
+    metadata.dynatrace.com/primary_tags.business_service_name: Grafana
+    metadata.dynatrace.com/primary_tags.business_criticality: L3
+
+opensearch:
+  podAnnotations:
+    # Primary tags:
+    metadata.dynatrace.com/primary_tags.business_service: BSN1001030
+    metadata.dynatrace.com/primary_tags.business_service_name: OpenSearch
+    metadata.dynatrace.com/primary_tags.business_criticality: L3
