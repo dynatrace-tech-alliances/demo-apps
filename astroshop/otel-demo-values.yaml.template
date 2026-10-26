@@ -289,6 +289,9 @@ opentelemetry-collector:
           receivers: [otlp]
           processors: [k8sattributes, transform, resource/dynatrace, batch]
           exporters: [otlphttp/dynatrace]
+        # Replace the default metrics exporters (list is replaced, not merged) to drop otlp_http/prometheus
+        metrics:
+          exporters: [debug]
         metrics/dynatrace:
           receivers: [otlp]
           processors: [k8sattributes, transform, resource/dynatrace, batch, cumulativetodelta]
@@ -308,20 +311,13 @@ jaeger:
       metadata.dynatrace.com/primary_tags.business_service_name: Jaeger
       metadata.dynatrace.com/primary_tags.business_criticality: L3
 
+# Prometheus is disabled; metrics go to Dynatrace via the collector.
 prometheus:
-  server:
-    podAnnotations:
-      # Primary tags:
-      metadata.dynatrace.com/primary_tags.business_service: BSN1001028
-      metadata.dynatrace.com/primary_tags.business_service_name: Prometheus
-      metadata.dynatrace.com/primary_tags.business_criticality: L3
+  enabled: false
 
+# Grafana is disabled because its datasource is Prometheus.
 grafana:
-  podAnnotations:
-    # Primary tags:
-    metadata.dynatrace.com/primary_tags.business_service: BSN1001029
-    metadata.dynatrace.com/primary_tags.business_service_name: Grafana
-    metadata.dynatrace.com/primary_tags.business_criticality: L3
+  enabled: false
 
 opensearch:
   podAnnotations:
